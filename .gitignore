@@ -1,3 +1,42 @@
+.vscode/
+.DS_Store
+.dart_tool/
+
+.pub/
+
+.idea/
+.vagrant/
+.sconsign.dblite
+.svn/
+
+migrate_working_dir/
+
+*.swp
+profile
+
+DerivedData/
+
+.generated/
+
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+!default.pbxuser
+!default.mode1v3
+!default.mode2v3
+!default.perspectivev3
+
+xcuserdata
+
+*.moved-aside
+
+*.pyc
+*sync/
+Icon?
+.tags*
+
 # Miscellaneous
 *.class
 *.lock
@@ -34,13 +73,15 @@ analysis_benchmark.json
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
 **/generated_plugin_registrant.dart
 .packages
 .pub-preload-cache/
 .pub/
 build/
+.android/
+.ios/
+.flutter-plugins
+.flutter-plugins-dependencies
 flutter_*.png
 linked_*.ds
 unlinked.ds
@@ -109,6 +150,12 @@ coverage/
 
 # Symbols
 app.*.symbols
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
