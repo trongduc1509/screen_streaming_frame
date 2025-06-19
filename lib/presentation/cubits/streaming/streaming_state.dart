@@ -1,8 +1,5 @@
-import 'package:screen_streaming_frame/domain/entity/peer_entity.dart';
-
 enum StreamingStatus {
   initial,
-  connected,
   streaming,
 }
 
@@ -15,13 +12,13 @@ class StreamingState {
   const StreamingState({
     this.status = StreamingStatus.initial,
     this.actionStatus = StreamingActionStatus.none,
-    required this.viewerInfo,
+    // required this.signalServerInfo,
     this.error,
   });
 
   final StreamingStatus status;
   final StreamingActionStatus actionStatus;
-  final PeerEntity viewerInfo;
+  // final PeerEntity signalServerInfo;
   final String? error;
 
   bool get isInProgress => status != StreamingStatus.initial;
@@ -29,13 +26,13 @@ class StreamingState {
   StreamingState copyWith({
     StreamingStatus? status,
     StreamingActionStatus? actionStatus,
-    PeerEntity? viewerInfo,
+    //PeerEntity? signalServerInfo,
     String? error,
   }) {
     return StreamingState(
       status: status ?? this.status,
       actionStatus: actionStatus ?? this.actionStatus,
-      viewerInfo: viewerInfo ?? this.viewerInfo,
+      // signalServerInfo: signalServerInfo ?? this.signalServerInfo,
       error: error ?? this.error,
     );
   }

@@ -10,7 +10,7 @@ class ViewingScreen extends StatefulWidget {
 
   static Widget newInstance() {
     return BlocProvider<ViewingCubit>(
-      create: (context) => ViewingCubit()..startViewingProcess(),
+      create: (context) => ViewingCubit(),
       child: const ViewingScreen._(),
     );
   }

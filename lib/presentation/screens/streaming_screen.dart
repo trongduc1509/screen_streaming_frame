@@ -52,7 +52,9 @@ class _StreamingScreenState extends State<StreamingScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const SizedBox(width: double.infinity),
-                    _buildBody(),
+                    Expanded(
+                      child: _buildBody(),
+                    ),
                   ],
                 ),
               ),
@@ -69,21 +71,15 @@ class _StreamingScreenState extends State<StreamingScreen> {
         switch (state.status) {
           case StreamingStatus.initial:
             return StreamingConnectView(
-              onConnect: (ipAddr, port) {
-                _streamingCubit.connectToViewer(ipAddr, port);
+              onConnect: (viewerId) {
+                _streamingCubit.startStreamingProcess(
+                  viewerId: viewerId,
+                );
               },
             );
-          case StreamingStatus.connected:
           case StreamingStatus.streaming:
             return StreamingView(
-              status: state.status,
-              streamingAction: () {
-                if (state.status == StreamingStatus.streaming) {
-                  _streamingCubit.stopStreaming();
-                } else {
-                  _streamingCubit.startStreaming();
-                }
-              },
+              streamingAction: _streamingCubit.stopStreamingProcess,
             );
         }
       },

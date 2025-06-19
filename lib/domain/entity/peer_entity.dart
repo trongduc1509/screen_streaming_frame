@@ -16,7 +16,7 @@ class PeerEntity extends Equatable {
   final String ip;
   final int port;
 
-  bool get isEmpty => this == PeerEntity.empty();
+  bool get isEmpty => this == const PeerEntity.empty();
 
   factory PeerEntity.fromBytes(Uint8List bytes) {
     final byteData = ByteData.sublistView(bytes);
@@ -50,14 +50,12 @@ class PeerEntity extends Equatable {
     );
   }
 
-  factory PeerEntity.empty() {
-    return PeerEntity(
+  const PeerEntity.empty() : this(
       id: '',
       role: PeerRole.unknown,
       ip: '',
       port: -1,
     );
-  }
 
   @override
   List<Object?> get props => [

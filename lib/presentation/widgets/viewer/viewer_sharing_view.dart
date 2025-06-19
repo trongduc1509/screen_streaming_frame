@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:screen_streaming_frame/platform/p2p_streaming_channel.dart';
 import 'package:screen_streaming_frame/presentation/cubits/viewing/viewing_state.dart';
 import 'package:screen_streaming_frame/presentation/widgets/foundations/app_button.dart';
 
@@ -60,7 +61,15 @@ class _ViewerSharingViewState extends State<ViewerSharingView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Sharing content"),
+              StreamBuilder(
+                stream: P2PStreamingChannel.instance.frameStream,
+                builder: (context, snapshot) {
+                  return Text(
+                    "Frame content:\n${snapshot.data}",
+                    textAlign: TextAlign.center,
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -70,7 +79,7 @@ class _ViewerSharingViewState extends State<ViewerSharingView> {
           fixedSize: Size(MediaQuery.sizeOf(context).width / 2, 30),
           onPressed: widget.cancelViewing,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 16),
       ],
     );
   }

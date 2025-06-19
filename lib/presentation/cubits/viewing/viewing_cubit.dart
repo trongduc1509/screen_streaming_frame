@@ -1,26 +1,27 @@
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:screen_streaming_frame/domain/entity/connection_port.dart';
 import 'package:screen_streaming_frame/domain/entity/peer_entity.dart';
 import 'package:screen_streaming_frame/platform/p2p_streaming_channel.dart';
 import 'package:screen_streaming_frame/presentation/cubits/viewing/viewing_state.dart';
-
-const int _signalingServerPort = 5588;
 
 class ViewingCubit extends Cubit<ViewingState> {
   ViewingCubit()
       : super(ViewingState(
           serverInfo: PeerEntity.empty(),
-        ));
+        )) {
+    _startViewingProcess();
+  }
 
-  void startViewingProcess() async {
+  void _startViewingProcess() async {
     emit(state.copyWith(
       actionStatus: ViewerActionStatus.processing,
     ));
 
     try {
       final peerInfo = await P2PStreamingChannel.instance
-          .startSignalingServer(_signalingServerPort);
+          .startFrameStreamingServer(connectionPort);
 
       await P2PStreamingChannel.instance.startReceiving();
 
@@ -48,7 +49,7 @@ class ViewingCubit extends Cubit<ViewingState> {
     try {
       await P2PStreamingChannel.instance.stopReceiving();
 
-      await P2PStreamingChannel.instance.stopSignalingServer();
+      await P2PStreamingChannel.instance.stopFrameStreamingServer();
 
       emit(state.copyWith(
         status: ViewingStatus.initial,

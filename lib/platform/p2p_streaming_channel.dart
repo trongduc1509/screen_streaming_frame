@@ -35,14 +35,21 @@ class P2PStreamingChannel {
     }
   }
 
-  Future<void> startFrameStreamingServer(int port) async {
+  Future<PeerEntity> startFrameStreamingServer(int port) async {
     try {
-      await _methodChannel.invokeMethod(
+      final result = await _methodChannel.invokeMethod<Uint8List>(
         'startFrameStreamingServer',
         {'port': port},
       );
+
+      if (result != null && result.isNotEmpty) {
+        return PeerEntity.fromBytes(result);
+      }
+
+      throw Exception('Failed to start frame streaming server');
     } on PlatformException catch (e) {
       log(e.message ?? 'Starting frame streaming server error');
+      return PeerEntity.empty();
     }
   }
 
