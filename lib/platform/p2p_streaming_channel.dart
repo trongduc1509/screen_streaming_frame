@@ -136,7 +136,7 @@ class P2PStreamingChannel {
   }
 
   /// EVENTS
-  Stream<FrameEntity> get frameStream => _eventChannel
+  Stream<FrameEntity> getFramesStream() => _eventChannel
       .receiveBroadcastStream()
       .map((e) => e as Uint8List)
       .map((e) => FrameEntity(payload: e));

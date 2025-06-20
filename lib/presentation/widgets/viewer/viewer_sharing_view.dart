@@ -58,19 +58,27 @@ class _ViewerSharingViewState extends State<ViewerSharingView> {
         ),
         const SizedBox(height: 8),
         Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              StreamBuilder(
-                stream: P2PStreamingChannel.instance.frameStream,
-                builder: (context, snapshot) {
-                  return Text(
-                    "Frame content:\n${snapshot.data}",
+          child: Align(
+            alignment: Alignment.center,
+            child: StreamBuilder(
+              stream: P2PStreamingChannel.instance.getFramesStream(),
+              builder: (context, snapshot) {
+                final snapshotData = snapshot.data;
+
+                if (!snapshot.hasData || snapshotData == null) {
+                  return const Text(
+                    "Waiting for streamer...",
                     textAlign: TextAlign.center,
                   );
-                },
-              ),
-            ],
+                }
+
+                return Image.memory(
+                  snapshotData.payload,
+                  gaplessPlayback: true,
+                  fit: BoxFit.contain,
+                );
+              },
+            ),
           ),
         ),
         const SizedBox(height: 8),
